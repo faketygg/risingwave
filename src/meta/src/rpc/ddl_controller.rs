@@ -1843,16 +1843,6 @@ impl DdlController {
             }
         }
 
-        let upstream_actors = upstream_root_fragments
-            .values()
-            .map(|(fragment, _)| {
-                (
-                    fragment.fragment_id,
-                    fragment.actors.keys().copied().collect(),
-                )
-            })
-            .collect();
-
         let complete_graph = CompleteStreamFragmentGraph::with_upstreams(
             fragment_graph,
             FragmentGraphUpstreamContext {
@@ -1997,7 +1987,6 @@ impl DdlController {
         let ctx = CreateStreamingJobContext {
             upstream_fragment_downstreams,
             new_no_shuffle,
-            upstream_actors,
             building_locations,
             definition: stream_job.definition(),
             create_type: stream_job.create_type(),
